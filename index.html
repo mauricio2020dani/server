@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.ankiuyaripachamama.epizy.com/?i=1">
+<html>
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	
+	
+	<link rel="stylesheet" href="../libs/morris.css">
+	<script src="../libs/morris.min.js" charset="utf-8"></script>
+	
+	
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+	
+    <title>Instalaciones Electricas</title>
+
+<!parte del medidor----------------------------------------------------------- >
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript">
+      google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['TEMPERATURA °C', 10],
+          ['HUMEDAD %', 0],
+          
+        ]);
+
+        var options = {
+          width: 600, height: 140,
+          redFrom: 90, redTo: 100,
+          yellowFrom:75, yellowTo: 90,
+          minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+
+        setInterval(function() {
+          data.setValue(0, 1, 20 + Math.round(60 * Math.random()));
+          chart.draw(data, options);
+        }, 10000);
+        setInterval(function() {
+          data.setValue(1, 1, 20 + Math.round(60 * Math.random()));
+          chart.draw(data, options);
+        }, 5000);
+        setInterval(function() {
+          data.setValue(2, 1, 20 + Math.round(20 * Math.random()));
+          chart.draw(data, options);
+        }, 20000);
+      }
+    </script>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['AÑO', 'TEMPERATURA(Cª)', 'HUMEDAD (%)'],
+          ['Enero',     26,      15],
+          ['Febrero',  15,       21],
+		  ['Marzo',  20,       16],
+          ['Abril',    18,       12],
+		  ['Mayo',     27,       2],
+		  ['Junio',  13,       18],
+		  ['Julio',  28,       9],
+		  ['Agosto',  12,       18],
+		  ['Septiembre',  22,       14],
+		  ['Octubre',  12,       24],
+		  ['Noviembre',  20,       14],
+          ['Diciembre;',  11,       24]
+        ]);
+
+        var options = {
+          title: 'TEMPERATURA vs HUMEDAD',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+	
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+	 var options = {
+      width: 400,
+      height: 240,
+      vAxis: {minValue:0, maxValue:100},
+      animation: {
+        duration: 1000,
+        easing: 'in'
+      }
+    };
+
+    var chart = new google.visualization.LineChart(
+        document.getElementById('visualization'));
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'x');
+    data.addColumn('number', 'y');
+    data.addRow(['100', 123]);
+    data.addRow(['700', 17]);
+    var button = document.getElementById('b1');
+    function drawChart() {
+      // Disabling the button while the chart is drawing.
+      button.disabled = true;
+      google.visualization.events.addListener(chart, 'ready',
+          function() {
+            button.disabled = false;
+          });
+      chart.draw(data, options);
+    }
+
+    button.onclick = function() {
+      if (data.getNumberOfRows() > 5) {
+        data.removeRow(Math.floor(Math.random() * data.getNumberOfRows()));
+      }
+      // Generating a random x, y pair and inserting it so rows are sorted.
+      var x = Math.floor(Math.random() * 1000);
+      var y = Math.floor(Math.random() * 100);
+      var where = 0;
+      while (where < data.getNumberOfRows() && parseInt(data.getValue(where, 0)) < x) {
+        where++;
+      }
+      data.insertRows(where, [[x.toString(), y]]);
+      drawChart();
+    }
+    drawChart();
+	</script>
+	
+	</head>
+  <body>
+	<div class="container">
+		<h1 style="background-color:DodgerBlue;">TABLAS DE PROYECCIONES DE TEMPERATURA y HUMEDAD</h1>
+		<hr>
+	
+		<div class="row">
+		
+			<div class="col-md-6">
+				<h2 style="background-color:Gray;">GRAFICO COMPARATIVO DE TEMPERATURA/HUMEDAD</h2>
+				<hr>
+				<div id="myfirstchart"></div>
+			</div>
+			
+			<div class="col-md-6">
+				<h2 style="background-color:Gray;">GRAFICO COMPARATIVO DE CONSUMO DE ENERGIA/AGUA</h2>
+				<hr>
+				<div id="graficaT_H"></div>
+				
+				
+			</div>
+			
+			
+		</div>
+	<button type="button" id="botData" class="btn btn-primary">ACTUALIZAR DATOS</button>
+	</div>
+	
+	
+	<script src="lineas.js" charset="utf-8"></script>
+	<script src="lineast.js" charset="utf-8"></script>
+	
+	<center><div id="chart_div" style="width: 600px; height: 140px;"></div></center>
+	
+	<div id="curve_chart" style="width: 900px; height: 500px"></div> 
+	<div id="chart_div" style="width: 900px; height: 500px;"></div>
+	
+
+
+   
+
+
+  </body>
+</html>
